@@ -1,0 +1,98 @@
+class Rifleman superclass:"Soldier"
+
+	requirement "^/StandardIO"
+	requirement "^/Location"
+	requirement "Gun"
+	requirement "Mood"
+	...
+
+	class ShootAbility
+		requirement "Gun"
+		requirement "Target"
+		requirement "BulletCasing"
+		requirement "Smoke"
+
+		enumeration SkillLevel
+			state novice
+			state intermediate
+			state expert
+
+		SkillLevel skill
+
+		continuation initialize (skill:SkillLevel gunAbility:GunAbility)
+			@skill = skill
+
+		method fireGunAtTarget gun:Gun target:Target -> casing:BulletCasing smoke:Smoke
+			gun shootAtTarget target -> casing:casing1 smoke:smoke1
+			casing = casing1
+			smoke = smoke1
+
+		...
+
+	class CelebrateAbility
+
+		requirement "^/StandardIO"
+		requirement "Hat"
+
+		class HatTipAbility
+
+			requirement "Hat"
+
+			method tipHat input:Hat
+				input getTipped
+
+		...
+
+		method showOffForTheCrowd
+			hattipper tipHat
+			io print "Hello, ladies."
+
+	...
+
+	ShootAbility shooter
+	CelebrateAbility celebrater
+	MapAbility mapper
+	StandardIO io
+	Location location
+	Mood mood
+	Boolean relaxed
+	Gun gun
+	Boot leftBoot
+	Boot rightBoot
+	Glove leftGlove
+	FingerlessGlove? rightGlove
+	Hat hat
+	String[String] fieldGuides
+	` Example of a bunch of field guides indexed by integer...  String[Integer][String] fieldGuides
+
+	continuation initialize
+		@io initialize
+		@mood = Mood.happy
+		@relaxed = true
+		...
+
+	continuation initialize (io:StandardIO)
+		@io = io
+		@mood = Mood.happy
+		@relaxed = true
+		...
+
+	...
+
+	method shootEveryOtherTarget input:Target[] -> casings:BulletCasing[] smoke:Smoke
+		BulletCasing[] bulletcasings1
+		PuffOfSmoke smoke1 initialize
+
+		@location latitude -> latitude
+		@mapper markLatitude latitude
+
+		input count -> count
+		count greaterThan 2 -> continue
+
+		if continue
+			...
+		else
+			...
+			@celebrator showOffForTheCrowd
+
+	...

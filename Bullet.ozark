@@ -1,0 +1,26 @@
+class Bullet superclass:"^/Object"
+
+	Boolean used
+	BulletCasing? casing
+
+	continuation initialize
+		super initialize
+		BulletCasing casing1 initialize
+		@used = false
+		@casing = casing1
+
+	continuation initialize (used:Boolean)
+		super initialize
+		BulletCasing casing1 initialize
+		@used = used
+		@casing = casing1
+
+	method used -> output:Boolean
+		output = @used
+
+	method casing -> output:BulletCasing
+		output = @casing
+
+	method hitTarget input:Target
+		@casing =
+		input getHitByBullet

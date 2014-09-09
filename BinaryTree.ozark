@@ -1,0 +1,7 @@
+structure BinaryTree/{Type}
+	
+	{Type}? root
+	BinaryTree/{Type}? left
+	BinaryTree/{Type}? right
+
+	...

@@ -1,0 +1,26 @@
+class Gun superclass:"^/Object"
+
+	requirement "Bullet"
+
+	Bullet[] clip
+
+	...
+
+	` As defined here, the gun is shooting at the target; The gun is the subject.
+	method shootAtTarget input:Target -> casing:BulletCasing smoke:Smoke
+		@clip pop -> bullet1
+		bullet1 used -> used1
+
+		if used1
+			` This would be more cleanly handled with assertions, but it stands as a syntax example.
+			Exception exception1 initialize
+			raise exception1
+		else
+			bullet1 casing -> casing1
+
+			bullet hitTarget input
+			Smoke smoke1 initialize
+			smoke = smoke1
+			mandate casing1 * OptionalException exception1
+				raise exception1
+			casing = casing1
