@@ -1,4 +1,5 @@
-class Bullet superclass:"^/Object"
+class Bullet
+	inheritance Object reference:"Object"
 
 	Boolean used
 	BulletCasing? casing
@@ -22,5 +23,5 @@ class Bullet superclass:"^/Object"
 		output = @casing
 
 	method hitTarget input:Target
-		@casing =
+		unset @casing
 		input getHitByBullet

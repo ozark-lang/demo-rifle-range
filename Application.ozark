@@ -1,3 +1,4 @@
-class Application superclass:"Bundle"
+class Application
+	inheritance Bundle source:"Bundle"
 
 	...

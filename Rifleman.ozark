@@ -1,12 +1,15 @@
-class Rifleman superclass:"Soldier"
+class Rifleman
+	inheritance Soldier source:"Soldier"
 
-	requirement "^/StandardIO"
-	requirement "^/Location"
-	requirement "Gun"
-	requirement "Mood"
+	requirement StandardIO reference:"StandardIO"
+	requirement Location reference:"Location"
+	requirement Gun source:"Gun"
+	requirement Mood source:"Mood"
 	...
 
 	class ShootAbility
+		inheritance Ability source:"Ability"
+
 		requirement "Gun"
 		requirement "Target"
 		requirement "BulletCasing"
@@ -30,13 +33,15 @@ class Rifleman superclass:"Soldier"
 		...
 
 	class CelebrateAbility
+		inheritance Ability source:"Ability"
 
-		requirement "^/StandardIO"
-		requirement "Hat"
+		requirement StandardIO reference:"StandardIO"
+		requirement Hat source:"Hat"
 
 		class HatTipAbility
+			inheritance Ability source:"Ability"
 
-			requirement "Hat"
+			requirement Hat source:"Hat"
 
 			method tipHat input:Hat
 				input getTipped

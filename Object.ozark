@@ -1,12 +1,3 @@
 class Object
 
-	requirement "Character"
-	requirement "String"
-	requirement "Float"
-	requirement "Integer"
-	requirement "Boolean"
-	requirement "Array"
-	requirement "Dictionary"
-	...
-
 	method initialize

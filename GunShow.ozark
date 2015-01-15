@@ -1,8 +1,9 @@
-class GunShow superclass:"^/Application"
+class GunShow
+	inheritance Application reference:"Application"
 
-	requirement "^/StandardIO"
-	requirement "Gunman"
-	requirement "Rifleman"
+	requirement StandardIO reference:"StandardIO"
+	requirement Gunman source:"Gunman"
+	requirement Rifleman source:"Rifleman"
 
 	continuation initialize
 
@@ -27,7 +28,7 @@ class GunShow superclass:"^/Application"
 				Gun rifle initialize
 
 				rob equipGun rifle
-				rob shootEveryOtherTarget targets -> casings:casings1 smoke:smoke1 * exception:Exception
+				rob shootEveryOtherTarget targets -> casings:casings1 smoke:smoke1 \ exception:Exception
 					exception description -> description1
 					io print description1
 			default

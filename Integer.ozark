@@ -7,7 +7,7 @@ structure Integer
 	method divideBy input:Integer -> output:Integer
 		x notEqualTo 0 -> a
 		
-		assert a * exception:Exception
+		assert a \ exception:Exception
 			exception setMessage "Integer cannot be divided by zero."
 			raise exception
 

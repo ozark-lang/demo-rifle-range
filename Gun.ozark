@@ -1,6 +1,7 @@
-class Gun superclass:"^/Object"
+class Gun
+	inheritance Object reference:"Object"
 
-	requirement "Bullet"
+	requirement Bullet source:"Bullet"
 
 	Bullet[] clip
 
@@ -21,6 +22,6 @@ class Gun superclass:"^/Object"
 			bullet hitTarget input
 			Smoke smoke1 initialize
 			smoke = smoke1
-			mandate casing1 * OptionalException exception1
+			mandate casing1 \ OptionalException exception1
 				raise exception1
 			casing = casing1
