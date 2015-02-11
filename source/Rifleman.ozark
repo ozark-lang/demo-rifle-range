@@ -2,7 +2,6 @@ class Rifleman
 	inheritance Soldier source:"Soldier"
 
 	requirement StandardIO reference:"StandardIO"
-	requirement Location reference:"Location"
 	requirement Gun source:"Gun"
 	requirement Bullet.Casing source:"Bullet"
 	requirement Smoke source:"Smoke"
@@ -63,7 +62,6 @@ class Rifleman
 			io print "Hello, ladies."
 
 	StandardIO io
-	Location location
 	ShootAbility shooter
 	CelebrateAbility celebrator
 	Mood mood
@@ -72,22 +70,29 @@ class Rifleman
 	String[String] fieldGuides
 
 	continuation initialize
-		@io initialize
-		@location initialize
-		@shooter initialize
-		@celebrator initialize io:@io
+		StandardIO io initialize
+		ShootAbility shooter initialize
+		CelebrateAbility celebrator initialize io:io
+		Gun gun initialize
+		Hat hat initialize
+		@io = io
+		@shooter = shooter
+		@celebrator = celebrator
 		@mood = Mood.happy
-		@gun initialize
-		@hat initialize
+		@gun = gun
+		@hat = hat
 
 	continuation initialize (io:StandardIO)
+		ShootAbility shooter initialize
+		CelebrateAbility celebrator initialize io:io
+		Gun gun initialize
+		Hat hat initialize
 		@io = io
-		@location initialize
-		@shooter initialize
-		@celebrator initialize io:@io
+		@shooter = shooter
+		@celebrator = celebrator
 		@mood = Mood.happy
-		@gun initialize
-		@hat initialize
+		@gun = gun
+		@hat = hat
 
 	method shootEveryOtherTarget input:Target[] -> casings:Bullet.Casing[] smoke:Smoke success:Boolean
 		Bullet.Casing[] theCasings initialize

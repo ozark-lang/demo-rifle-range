@@ -8,8 +8,11 @@ class Gun
 
 	Bullet[] clip
 
+	continuation initialize
+		Bullet[] clip initializeWithCount:10
+		@clip = clip
+
 	method shootAtTarget input:Target -> casing:Bullet.Casing smoke:Smoke success:Boolean
-		
 		@clip pop -> bullet1 \ 
 			catch e:EmptyArrayException
 				e setMessage "The clip is empty."
