@@ -1,27 +1,21 @@
 class Bullet
 	inheritance Object reference:"Object"
 
+	requirement Target source:"Target"
+
 	Boolean used
 	BulletCasing? casing
 
 	continuation initialize
-		super initialize
 		BulletCasing casing1 initialize
-		@used = false
 		@casing = casing1
-
-	continuation initialize (used:Boolean)
-		super initialize
-		BulletCasing casing1 initialize
-		@used = used
-		@casing = casing1
-
-	method used -> output:Boolean
-		output = @used
 
 	method casing -> output:BulletCasing
-		output = @casing
+		output = @casing \ 
+			catch e:UnpackedEmptyOptionalException
+				e setMessage "The bullet has already been shot."
+				throw e
 
 	method hitTarget input:Target
 		unset @casing
-		input getHitByBullet
+		input getHit

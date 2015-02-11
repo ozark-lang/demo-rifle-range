@@ -1,0 +1,13 @@
+class GunShow
+	inheritance Application reference:"Application"
+
+	requirement Gunman source:"Gunman"
+	requirement Rifleman source:"Rifleman"
+
+	continuation initialize
+		Rifleman rob initialize
+		Target[] targets initialize count:10
+		Gun rifle initialize
+
+		rob equipGun rifle
+		rob shootEveryOtherTarget targets -> casings:casings1 smoke:smoke1

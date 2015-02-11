@@ -1,4 +1,0 @@
-class Application
-	inheritance Bundle source:"Bundle"
-
-	...

@@ -1,1 +1,1 @@
-ozark GunShow.ozark start
+ozark GunShow initialize -i Gunshow.ozark

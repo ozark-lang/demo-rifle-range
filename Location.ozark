@@ -1,4 +1,0 @@
-structure Location
-
-	Float latitude
-	Float longitude

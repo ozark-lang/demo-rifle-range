@@ -1,0 +1,24 @@
+class Gun
+	inheritance Object reference:"Object"
+
+	requirement Bullet source:"Bullet"
+	requirement Bullet.Casing source:"Bullet"
+	requirement Target source:"Target"
+	requirement Smoke source:"Smoke"
+
+	Bullet[] clip
+
+	method shootAtTarget input:Target -> casing:Bullet.Casing smoke:Smoke success:Boolean
+		
+		@clip pop -> bullet1 \ 
+			catch e:EmptyArrayException
+				e setMessage "The clip is empty."
+				throw e
+
+		bullet1 casing -> casing1
+		bullet1 hitTarget input
+
+		Smoke smoke1 initialize
+
+		smoke = smoke1
+		casing = casing1

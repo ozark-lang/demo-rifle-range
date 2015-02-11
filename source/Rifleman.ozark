@@ -1,0 +1,112 @@
+class Rifleman
+	inheritance Soldier source:"Soldier"
+
+	requirement StandardIO reference:"StandardIO"
+	requirement Location reference:"Location"
+	requirement Gun source:"Gun"
+	requirement Bullet.Casing source:"Bullet"
+	requirement Smoke source:"Smoke"
+	requirement Target source:"Target"
+	requirement Mood source:"Mood"
+	requirement Hat source:"Hat"
+
+	class ShootAbility
+		inheritance Ability source:"Ability"
+
+		requirement Gun source:"Gun"
+		requirement Target source:"Target"
+		requirement Bullet.Casing source:"Bullet"
+		requirement Smoke source:"Smoke"
+
+		enumeration SkillLevel
+			state novice
+			state intermediate
+			state expert
+
+		SkillLevel skill
+
+		continuation initialize (skill:SkillLevel)
+			@skill = skill
+
+		method fireGunAtTarget gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
+			gun shootAtTarget target -> casing:casing1 smoke:smoke1
+			casing = casing1
+			smoke = smoke1
+
+	class CelebrateAbility
+		inheritance Ability source:"Ability"
+
+		requirement StandardIO reference:"StandardIO"
+		requirement Hat source:"Hat"
+
+		class HatTipAbility
+			inheritance Ability source:"Ability"
+
+			requirement Hat source:"Hat"
+
+			method tipHat input:Hat
+				input getTipped
+
+		StandardIO io
+		HatTipAbility hatTipper
+
+		continuation initialize
+			@io initialize
+			@hatTipper initialize
+
+		continuation initialize (io:StandardIO)
+			@io = io
+			@hatTipper initialize
+
+		method showOffForTheCrowd hat:Hat
+			hatTipper tipHat:hat
+			io print "Hello, ladies."
+
+	StandardIO io
+	Location location
+	ShootAbility shooter
+	CelebrateAbility celebrator
+	Mood mood
+	Gun gun
+	Hat hat
+	String[String] fieldGuides
+
+	continuation initialize
+		@io initialize
+		@location initialize
+		@shooter initialize
+		@celebrator initialize io:@io
+		@mood = Mood.happy
+		@gun initialize
+		@hat initialize
+
+	continuation initialize (io:StandardIO)
+		@io = io
+		@location initialize
+		@shooter initialize
+		@celebrator initialize io:@io
+		@mood = Mood.happy
+		@gun initialize
+		@hat initialize
+
+	method shootEveryOtherTarget input:Target[] -> casings:Bullet.Casing[] smoke:Smoke success:Boolean
+		Bullet.Casing[] theCasings initialize
+		Smoke theSmoke initialize
+		Boolean[] successes initialize
+
+		input oddItems -> oddItems1
+
+		iterate oddItems1
+			shooter shootAtTarget:item -> casing:casing1 smoke:smoke1 success:success1
+			successes push:success1
+			theCasings push:casing1
+
+		successes all:true -> all
+
+		if all
+			@celebrator showOffForTheCrowd hat:@hat
+			@mood = Mood.happy
+
+		casings = theCasings
+		smoke = theSmoke
+		success = all

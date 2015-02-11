@@ -1,0 +1,10 @@
+class Target
+	inheritance Object reference:"Object"
+
+	Boolean upright
+
+	continuation initialize
+		@upright = true
+
+	method getHit
+		@upright = false
