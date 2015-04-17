@@ -6,22 +6,22 @@ class Gun
 	requirement Target source:"Target"
 	requirement Smoke source:"Smoke"
 
-	Bullet[] clip
+	[Bullet] clip
 
 	continuation initialize
-		Bullet[] clip initializeWithCount:10
-		@clip = clip
+		[Bullet] clip initializeWithCount:10
+		set my clip <- clip
 
 	method shootAtTarget input:Target -> casing:Bullet.Casing smoke:Smoke success:Boolean
-		@clip pop -> bullet1 \ 
-			catch e:EmptyArrayException
-				e setMessage "The clip is empty."
-				throw e
+		my clip pop -> bullet1 \ 
+			catch exception:EmptyArrayException
+				exception setMessage "The clip is empty."
+				raise exception
 
 		bullet1 casing -> casing1
 		bullet1 hitTarget input
 
 		Smoke smoke1 initialize
 
-		smoke = smoke1
-		casing = casing1
+		set smoke <- smoke1
+		set casing <- casing1

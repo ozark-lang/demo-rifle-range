@@ -6,7 +6,7 @@ class GunShow
 
 	continuation initialize
 		Rifleman rob initialize
-		Target[] targets initialize count:10
+		[Target] targets initialize count:10
 		Gun rifle initialize
 
 		rob equipGun rifle

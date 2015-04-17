@@ -8,14 +8,14 @@ class Bullet
 
 	continuation initialize
 		BulletCasing casing1 initialize
-		@casing = casing1
+		set my casing <- casing1
 
 	method casing -> output:BulletCasing
-		output = @casing \ 
-			catch e:UnpackedEmptyOptionalException
+		set output <- my casing! \ 
+			catch e:NoValueException
 				e setMessage "The bullet has already been shot."
 				throw e
 
 	method hitTarget input:Target
-		unset @casing
+		unset my casing
 		input getHit

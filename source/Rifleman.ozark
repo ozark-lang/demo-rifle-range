@@ -25,12 +25,12 @@ class Rifleman
 		SkillLevel skill
 
 		continuation initialize (skill:SkillLevel)
-			@skill = skill
+			set my skill <- skill
 
 		method fireGunAtTarget gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
 			gun shootAtTarget target -> casing:casing1 smoke:smoke1
-			casing = casing1
-			smoke = smoke1
+			set casing <- casing1
+			set smoke <- smoke1
 
 	class CelebrateAbility
 		inheritance Ability source:"Ability"
@@ -50,12 +50,12 @@ class Rifleman
 		HatTipAbility hatTipper
 
 		continuation initialize
-			@io initialize
-			@hatTipper initialize
+			my io initialize
+			my hatTipper initialize
 
-		continuation initialize (io:StandardIO)
-			@io = io
-			@hatTipper initialize
+		continuation initialize +io:StandardIO
+			set my io <- io
+			my hatTipper initialize
 
 		method showOffForTheCrowd hat:Hat
 			hatTipper tipHat:hat
@@ -67,7 +67,7 @@ class Rifleman
 	Mood mood
 	Gun gun
 	Hat hat
-	String[String] fieldGuides
+	[[String]] fieldGuides
 
 	continuation initialize
 		StandardIO io initialize
@@ -75,43 +75,42 @@ class Rifleman
 		CelebrateAbility celebrator initialize io:io
 		Gun gun initialize
 		Hat hat initialize
-		@io = io
-		@shooter = shooter
-		@celebrator = celebrator
-		@mood = Mood.happy
-		@gun = gun
-		@hat = hat
+		set my io <- io
+		set my shooter <- shooter
+		set my celebrator <- celebrator
+		set my mood <- Mood.happy
+		set my gun <- gun
+		set my hat <- hat
 
-	continuation initialize (io:StandardIO)
+	continuation initialize +io:StandardIO
 		ShootAbility shooter initialize
 		CelebrateAbility celebrator initialize io:io
 		Gun gun initialize
 		Hat hat initialize
-		@io = io
-		@shooter = shooter
-		@celebrator = celebrator
-		@mood = Mood.happy
-		@gun = gun
-		@hat = hat
+		set my io <- io
+		set my shooter <- shooter
+		set my celebrator <- celebrator
+		set my mood <- Mood.happy
+		set my gun <- gun
+		set my hat <- hat
 
-	method shootEveryOtherTarget input:Target[] -> casings:Bullet.Casing[] smoke:Smoke success:Boolean
-		Bullet.Casing[] theCasings initialize
+	method shootEveryOtherTarget input:[Target] -> casings:[Bullet.Casing] smoke:Smoke success:Boolean
+		[Bullet.Casing] theCasings initialize
 		Smoke theSmoke initialize
-		Boolean[] successes initialize
+		[Boolean] successes initialize
 
 		input oddItems -> oddItems1
 
-		iterate oddItems1
-			shooter shootAtTarget:item -> casing:casing1 smoke:smoke1 success:success1
-			successes push:success1
-			theCasings push:casing1
+		each oddItems1 -> item
+			shooter shootAtTarget item -> success:success
+			successes push success
 
 		successes all:true -> all
 
-		if all
-			@celebrator showOffForTheCrowd hat:@hat
-			@mood = Mood.happy
+		if (all)
+			my celebrator showOffForTheCrowd hat:my hat
+			set my mood <- Mood.happy
 
-		casings = theCasings
-		smoke = theSmoke
-		success = all
+		set casings <- theCasings
+		set smoke <- theSmoke
+		set success <- all
