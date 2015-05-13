@@ -3,11 +3,12 @@ class Bullet
 
 	requirement Target source:"Target"
 
-	Boolean used
-	BulletCasing? casing
+	member casing:BulletCasing?
+
+	property used:Boolean
 
 	continuation initialize
-		BulletCasing casing1 initialize
+		create casing1:BulletCasing initialize
 		set my casing <- casing1
 
 	method casing -> output:BulletCasing

@@ -1,7 +1,7 @@
 class Target
 	inheritance Object reference:"Object"
 
-	Boolean upright
+	property upright:Boolean
 
 	continuation initialize
 		set my upright <- true

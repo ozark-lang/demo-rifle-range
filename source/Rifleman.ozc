@@ -17,18 +17,21 @@ class Rifleman
 		requirement Bullet.Casing source:"Bullet"
 		requirement Smoke source:"Smoke"
 
+		reference Calculus source:"Calculus"
+
 		enumeration SkillLevel
-			state novice
-			state intermediate
-			state expert
+			state Novice
+			state Intermediate
+			state Expert
 
-		SkillLevel skill
+		member skill:SkillLevel
 
-		continuation initialize (skill:SkillLevel)
+		continuation initialize ~skill:SkillLevel
 			set my skill <- skill
 
 		method fireGunAtTarget gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
 			gun shootAtTarget target -> casing:casing1 smoke:smoke1
+
 			set casing <- casing1
 			set smoke <- smoke1
 
@@ -46,14 +49,14 @@ class Rifleman
 			method tipHat input:Hat
 				input getTipped
 
-		StandardIO io
-		HatTipAbility hatTipper
+		member io:StandardIO
+		member hatTipper:HatTipAbility
 
 		continuation initialize
 			my io initialize
 			my hatTipper initialize
 
-		continuation initialize +io:StandardIO
+		continuation initialize ~io:StandardIO
 			set my io <- io
 			my hatTipper initialize
 
@@ -61,20 +64,22 @@ class Rifleman
 			hatTipper tipHat:hat
 			io print "Hello, ladies."
 
-	StandardIO io
-	ShootAbility shooter
-	CelebrateAbility celebrator
-	Mood mood
-	Gun gun
-	Hat hat
-	[[String]] fieldGuides
+	member io:StandardIO
+	member shooter:ShootAbility
+	member celebrator:CelebrateAbility
+	member gun:Gun
+	member hat:Hat
+
+	property mood:Mood
+	property fieldGuides:Dictionary by String of String
 
 	continuation initialize
-		StandardIO io initialize
-		ShootAbility shooter initialize
-		CelebrateAbility celebrator initialize io:io
-		Gun gun initialize
-		Hat hat initialize
+		create io:StandardIO initialize
+		create shooter:ShootAbility initialize
+		create celebrator:CelebrateAbility initialize io:io
+		create gun:Gun initialize
+		create hat:Hat initialize
+
 		set my io <- io
 		set my shooter <- shooter
 		set my celebrator <- celebrator
@@ -82,11 +87,12 @@ class Rifleman
 		set my gun <- gun
 		set my hat <- hat
 
-	continuation initialize +io:StandardIO
-		ShootAbility shooter initialize
-		CelebrateAbility celebrator initialize io:io
-		Gun gun initialize
-		Hat hat initialize
+	continuation initialize ~io:StandardIO
+		create shooter:ShootAbility initialize
+		create celebrator:CelebrateAbility initialize io:io
+		create gun:Gun initialize
+		create hat:Hat initialize
+
 		set my io <- io
 		set my shooter <- shooter
 		set my celebrator <- celebrator
@@ -94,20 +100,22 @@ class Rifleman
 		set my gun <- gun
 		set my hat <- hat
 
-	method shootEveryOtherTarget input:[Target] -> casings:[Bullet.Casing] smoke:Smoke success:Boolean
-		[Bullet.Casing] theCasings initialize
-		Smoke theSmoke initialize
-		[Boolean] successes initialize
+	method shootEveryOtherTarget input:Array of Target -> casings:Array of Bullet.Casing smoke:Smoke success:Boolean
+		create theCasings:Array of Bullet.Casing initialize
+		create theSmoke:Smoke initialize
+		create successes:Array of Boolean initialize
 
-		input oddItems -> oddItems1
+		input oddItems -> oddItems
+		oddItems keys -> keys
 
-		each oddItems1 -> item
-			shooter shootAtTarget item -> success:success
+		each keys as key
+			oddItems objectAt key -> i
+			shooter shootAtTarget i -> success:success
 			successes push success
 
-		successes all:true -> all
+		successes all true -> all
 
-		if (all)
+		if all
 			my celebrator showOffForTheCrowd hat:my hat
 			set my mood <- Mood.happy
 
