@@ -27,7 +27,7 @@ class Rifleman
 		member skill:SkillLevel
 
 		continuation initialize ~skill:SkillLevel
-			set my skill <- skill
+			set .skill <- skill
 
 		method fireGunAtTarget gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
 			gun shootAtTarget target -> casing:casing1 smoke:smoke1
@@ -53,16 +53,16 @@ class Rifleman
 		member hatTipper:HatTipAbility
 
 		continuation initialize
-			my io initialize
-			my hatTipper initialize
+			.io initialize
+			.hatTipper initialize
 
 		continuation initialize ~io:StandardIO
-			set my io <- io
-			my hatTipper initialize
+			set .io <- io
+			.hatTipper initialize
 
 		method showOffForTheCrowd hat:Hat
-			hatTipper tipHat:hat
-			io print "Hello, ladies."
+			.hatTipper tipHat:hat
+			.io print "Hello, ladies."
 
 	member io:StandardIO
 	member shooter:ShootAbility
@@ -80,12 +80,12 @@ class Rifleman
 		create gun:Gun initialize
 		create hat:Hat initialize
 
-		set my io <- io
-		set my shooter <- shooter
-		set my celebrator <- celebrator
-		set my mood <- Mood.happy
-		set my gun <- gun
-		set my hat <- hat
+		set .io <- io
+		set .shooter <- shooter
+		set .celebrator <- celebrator
+		set .mood <- Mood.happy
+		set .gun <- gun
+		set .hat <- hat
 
 	continuation initialize ~io:StandardIO
 		create shooter:ShootAbility initialize
@@ -93,12 +93,12 @@ class Rifleman
 		create gun:Gun initialize
 		create hat:Hat initialize
 
-		set my io <- io
-		set my shooter <- shooter
-		set my celebrator <- celebrator
-		set my mood <- Mood.happy
-		set my gun <- gun
-		set my hat <- hat
+		set .io <- io
+		set .shooter <- shooter
+		set .celebrator <- celebrator
+		set .mood <- Mood.happy
+		set .gun <- gun
+		set .hat <- hat
 
 	method shootEveryOtherTarget input:Array of Target -> casings:Array of Bullet.Casing smoke:Smoke success:Boolean
 		create theCasings:Array of Bullet.Casing initialize
@@ -108,7 +108,7 @@ class Rifleman
 		input oddItems -> oddItems
 		oddItems keys -> keys
 
-		each keys as key
+		for key in:keys
 			oddItems objectAt key -> i
 			shooter shootAtTarget i -> success:success
 			successes push success
@@ -116,8 +116,8 @@ class Rifleman
 		successes all true -> all
 
 		if all
-			my celebrator showOffForTheCrowd hat:my hat
-			set my mood <- Mood.happy
+			.celebrator showOffForTheCrowd hat:.hat
+			set .mood <- Mood.happy
 
 		set casings <- theCasings
 		set smoke <- theSmoke

@@ -4,7 +4,7 @@ class Target
 	property upright:Boolean
 
 	continuation initialize
-		set my upright <- true
+		set .upright <- true
 
 	method getHit
-		set my upright <- false
+		set .upright <- false

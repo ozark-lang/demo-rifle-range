@@ -9,21 +9,21 @@ class Gun
 	member clip:Array of Bullet
 
 	continuation initialize
-		create clip:Array of Bullet initialize
+		create clip1:Array of Bullet initialize
 		create bullet1:Bullet initialize
 		create bullet2:Bullet initialize
 		create bullet3:Bullet initialize
 		create bullet4:Bullet initialize
 
-		clip addBullet bullet1
-		clip addBullet bullet2
-		clip addBullet bullet3
-		clip addBullet bullet4
+		clip1 addBullet bullet1
+		clip1 addBullet bullet2
+		clip1 addBullet bullet3
+		clip1 addBullet bullet4
 
-		set my clip <- clip
+		set .clip <- clip1
 
 	method shootAtTarget input:Target -> casing:Bullet.Casing smoke:Smoke success:Boolean
-		my clip pop -> bullet1 \ 
+		clip pop -> bullet1
 			catch exception:EmptyArrayException
 				exception setMessage "The clip is empty."
 				raise exception
