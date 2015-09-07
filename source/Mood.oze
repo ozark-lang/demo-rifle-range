@@ -1,6 +1,0 @@
-enumeration Mood
-
-	state Happy
-	state Sad
-	state Angry
-	state Calm

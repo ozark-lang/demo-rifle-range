@@ -1,0 +1,33 @@
+inheritance Object
+
+requirement Bullet
+requirement Target
+requirement Smoke
+
+member clip:Array|Bullet
+
+extension initialize
+	create clip1:Array|Bullet initialize
+	create bullet1:Bullet initialize
+	create bullet2:Bullet initialize
+	create bullet3:Bullet initialize
+	create bullet4:Bullet initialize
+
+	clip1 addBullet bullet1
+	clip1 addBullet bullet2
+	clip1 addBullet bullet3
+	clip1 addBullet bullet4
+
+	set @clip <- clip1
+
+method shootTarget #target:Target -> casing:Bullet.Casing? smoke:Smoke?
+	@clip pop -> bullet1
+
+	with bullet1
+		bullet1 getCasing -> casing1
+		bullet1 hitTarget target
+
+		create smoke1:Smoke initialize
+
+		set smoke <- smoke1
+		set casing <- casing1

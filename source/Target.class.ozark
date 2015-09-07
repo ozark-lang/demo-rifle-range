@@ -1,0 +1,9 @@
+inheritance Object
+
+property upright:Boolean
+
+extension initialize
+	set @upright <- true
+
+method getHit
+	set @upright <- false

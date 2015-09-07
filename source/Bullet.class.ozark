@@ -1,0 +1,19 @@
+inheritance Object
+
+requirement Target
+
+member casing:BulletCasing?
+
+property used:Boolean
+
+extension initialize
+	create casing1:BulletCasing initialize
+	set @casing <- casing1
+
+method setCasing -> #casing:BulletCasing?
+	with @casing
+		set casing <- @casing
+
+method hitTarget #target:Target
+	clear @casing
+	target getHit
