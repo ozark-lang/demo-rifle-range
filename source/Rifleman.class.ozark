@@ -105,7 +105,7 @@ method shootEveryOtherTarget #targets:Array|Target -> casings:Array|Bullet.Casin
 	input oddItems -> oddItems
 	oddItems getKeys -> keys
 
-	for k in:keys -> successes:[Boolean]
+	for k:keys -> successes:[Boolean]
 		oddItems lookup k -> i
 		shooter shootTarget i -> result
 		successes <- result
