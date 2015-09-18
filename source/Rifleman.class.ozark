@@ -44,7 +44,7 @@ class CelebrateAbility
 
 		requirement Hat
 
-		method tipHat $hat:Hat
+		method tipHat #hat:Hat
 			hat getTipped
 
 	member io:StandardIO
