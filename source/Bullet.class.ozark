@@ -2,18 +2,19 @@ inheritance Object
 
 requirement Target
 
-member casing:BulletCasing?
-
-property used:Boolean
+property @casing:BulletCasing?
+property @used:Boolean
 
 extension initialize
-	create casing1:BulletCasing initialize
-	set @casing <- casing1
+	create casing:BulletCasing; initialize
+	
+	assign @casing <- casing
 
-method setCasing -> #casing:BulletCasing?
+method getCasing -> $casing:BulletCasing?
 	with @casing
-		set casing <- @casing
+		assign casing <- @casing
 
-method hitTarget #target:Target
+method hitTarget $target:Target
 	clear @casing
+
 	target getHit

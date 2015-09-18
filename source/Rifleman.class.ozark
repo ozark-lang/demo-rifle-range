@@ -15,23 +15,27 @@ class ShootAbility
 	requirement Target
 	requirement Bullet.Casing
 	requirement Smoke
-	requirement Calculus
 
 	enumeration SkillLevel
-		state Novice
-		state Intermediate
-		state Expert
+		state novice
+		state intermediate
+		state expert
 
-	member skill:SkillLevel
+	property @skill:SkillLevel
 
-	extension initialize ~skill:SkillLevel
-		set @skill <- skill
+	extension initialize
+		create skill:SkillLevel; initialize SkillLevel.novice
+		
+		assign @skill <- skill
+
+	extension initialize !skill:SkillLevel
+		assign @skill <- skill
 
 	method fireGun gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
 		gun shoot target -> casing:casing1 smoke:smoke1
 
-		set casing <- casing1
-		set smoke <- smoke1
+		assign casing <- casing1
+		assign smoke <- smoke1
 
 class CelebrateAbility
 	inheritance Ability
@@ -44,76 +48,80 @@ class CelebrateAbility
 
 		requirement Hat
 
-		method tipHat #hat:Hat
+		method tipHat $hat:Hat
 			hat getTipped
 
-	member io:StandardIO
-	member hatTipper:HatTipAbility
+	property @io:StandardIO
+	property @hatTipper:HatTipAbility
 
 	extension initialize
-		@io initialize
-		@hatTipper initialize
+		create io:StandardIO; initialize 
+		create hatTipper:HatTipAbility; initialize
 
-	extension initialize ~io:StandardIO
-		set @io <- io
-		@hatTipper initialize
+		assign @io <- io
+		assign @hatTipper <- hatTipper
+
+	extension initialize !io:StandardIO
+		create hatTipper:HatTipAbility; initialize
+
+		assign @io <- io
+		assign @hatTipper <- hatTipper
 
 	method showOffForTheCrowd hat:Hat
 		@hatTipper tipHat hat
 		@io print "Hello, ladies."
 
-member io:StandardIO
-member shooter:ShootAbility
-member celebrator:CelebrateAbility
-member gun:Gun
-member hat:Hat
-
-property mood:Mood
-property fieldGuides:Dictionary\String|String
+property @io:StandardIO
+property @shooter:ShootAbility
+property @celebrator:CelebrateAbility
+property @gun:Gun
+property @hat:Hat
+property @mood:Mood
 
 extension initialize
-	create io:StandardIO initialize
-	create shooter:ShootAbility initialize
-	create celebrator:CelebrateAbility initialize io:io
-	create gun:Gun initialize
-	create hat:Hat initialize
+	create io:StandardIO; initialize
+	create shooter:ShootAbility; initialize
+	create celebrator:CelebrateAbility; initialize io:io
+	create mood:Mood; initialize Mood.happy
+	create gun:Gun; initialize
+	create hat:Hat; initialize
 
-	set @io <- io
-	set @shooter <- shooter
-	set @celebrator <- celebrator
-	set @mood <- Mood.happy
-	set @gun <- gun
-	set @hat <- hat
+	assign @io <- io
+	assign @shooter <- shooter
+	assign @celebrator <- celebrator
+	assign @mood <- mood
+	assign @gun <- gun
+	assign @hat <- hat
 
-extension initialize ~io:StandardIO
-	create shooter:ShootAbility initialize
-	create celebrator:CelebrateAbility initialize io:io
-	create gun:Gun initialize
-	create hat:Hat initialize
+extension initialize !io:StandardIO
+	create shooter:ShootAbility; initialize
+	create celebrator:CelebrateAbility; initialize io:io
+	create mood:Mood; initialize Mood.happy
+	create gun:Gun; initialize
+	create hat:Hat; initialize
 
-	set @io <- io
-	set @shooter <- shooter
-	set @celebrator <- celebrator
-	set @mood <- Mood.happy
-	set @gun <- gun
-	set @hat <- hat
+	assign @io <- io
+	assign @shooter <- shooter
+	assign @celebrator <- celebrator
+	assign @mood <- mood
+	assign @gun <- gun
+	assign @hat <- hat
 
-method shootEveryOtherTarget #targets:Array|Target -> casings:Array|Bullet.Casing smoke:Smoke success:Boolean
-	create theCasings:Array|Bullet.Casing initialize
-	create theSmoke:Smoke initialize
+method shootEveryOtherTarget $targets:[Target] -> casings:[Bullet.Casing] smoke:Smoke success:Boolean
+	create theSmoke:Smoke; initialize
+	create wasSuccessful:Boolean; initialize true
+	create bulletCasings:[Bullet.Casing]; initialize []
 
-	input oddItems -> oddItems
-	oddItems getKeys -> keys
+	for target:targets
+		shooter shootTarget target -> success:success1 casing:casing1 smoke:smoke1
+		wasSuccessful and success1
+		theSmoke add smoke1
+		bulletCasings append casing1
 
-	for k:keys -> successes:[Boolean]
-		oddItems lookup k -> i
-		shooter shootTarget i -> result
-		successes <- result
-
-	if all(successes)
+	if wasSuccessful
 		@celebrator showOffForTheCrowd hat:@hat
-		set @mood <- Mood.happy
+		@mood set Mood.happy
 
-	set casings <- theCasings
-	set smoke <- theSmoke
-	set success <- all(successes)
+	assign casings <- bulletCasings
+	assign smoke <- theSmoke
+	assign success <- wasSuccessful

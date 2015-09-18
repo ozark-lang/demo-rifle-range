@@ -4,30 +4,30 @@ requirement Bullet
 requirement Target
 requirement Smoke
 
-member clip:Array|Bullet
+property @clip:[Bullet]
 
 extension initialize
-	create clip1:Array|Bullet initialize
-	create bullet1:Bullet initialize
-	create bullet2:Bullet initialize
-	create bullet3:Bullet initialize
-	create bullet4:Bullet initialize
+	create clip:[Bullet]; initialize
+	create bullet1:Bullet; initialize
+	create bullet2:Bullet; initialize
+	create bullet3:Bullet; initialize
+	create bullet4:Bullet; initialize
 
-	clip1 addBullet bullet1
-	clip1 addBullet bullet2
-	clip1 addBullet bullet3
-	clip1 addBullet bullet4
+	clip add bullet1
+	clip add bullet2
+	clip add bullet3
+	clip add bullet4
 
-	set @clip <- clip1
+	assign @clip <- clip
 
-method shootTarget #target:Target -> casing:Bullet.Casing? smoke:Smoke?
-	@clip pop -> bullet1
+method shootTarget $target:Target -> casing:Bullet.Casing? smoke:Smoke?
+	@clip pop -> bullet
 
-	with bullet1
-		bullet1 getCasing -> casing1
-		bullet1 hitTarget target
+	with bullet
+		bullet getCasing -> casing1
+		bullet hitTarget target
 
-		create smoke1:Smoke initialize
+		create smoke1:Smoke; initialize
 
-		set smoke <- smoke1
-		set casing <- casing1
+		assign smoke <- smoke1
+		assign casing <- casing1
