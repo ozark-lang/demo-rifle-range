@@ -23,19 +23,17 @@ class ShootAbility
 
 	property @skill:SkillLevel
 
-	extension initialize
-		create skill:SkillLevel; initialize SkillLevel.novice
-		
-		assign @skill <- skill
+	extension initialize		
+		set @skill <- SkillLevel.novice
 
-	extension initialize !skill:SkillLevel
-		assign @skill <- skill
+	extension initialize &skill:SkillLevel
+		prepare @skill; initialize skill
 
-	method fireGun gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
-		gun shoot target -> casing:casing1 smoke:smoke1
+	method fireGun gun:Gun target:Target -> $casing:Bullet.Casing $smoke:Smoke
+		gun shoot target -> casing:casing smoke:smoke
 
-		assign casing <- casing1
-		assign smoke <- smoke1
+		set $casing <- casing
+		set $smoke <- smoke
 
 class CelebrateAbility
 	inheritance Ability
@@ -48,24 +46,20 @@ class CelebrateAbility
 
 		requirement Hat
 
-		method tipHat $hat:Hat
+		method tipHat _hat:Hat
 			hat getTipped
 
 	property @io:StandardIO
 	property @hatTipper:HatTipAbility
 
 	extension initialize
-		create io:StandardIO; initialize 
-		create hatTipper:HatTipAbility; initialize
+		prepare @io; initialize 
+		prepare @hatTipper; initialize
 
-		assign @io <- io
-		assign @hatTipper <- hatTipper
+	extension initialize &io:StandardIO
+		set @io <- io
 
-	extension initialize !io:StandardIO
-		create hatTipper:HatTipAbility; initialize
-
-		assign @io <- io
-		assign @hatTipper <- hatTipper
+		prepare @hatTipper; initialize
 
 	method showOffForTheCrowd hat:Hat
 		@hatTipper tipHat hat
@@ -79,49 +73,46 @@ property @hat:Hat
 property @mood:Mood
 
 extension initialize
-	create io:StandardIO; initialize
-	create shooter:ShootAbility; initialize
-	create celebrator:CelebrateAbility; initialize io:io
-	create mood:Mood; initialize Mood.happy
-	create gun:Gun; initialize
-	create hat:Hat; initialize
+	prepare @io; initialize
+	prepare @shooter; initialize
+	prepare @celebrator; initialize io:io
+	prepare @gun; initialize
+	prepare @hat; initialize
 
-	assign @io <- io
-	assign @shooter <- shooter
-	assign @celebrator <- celebrator
-	assign @mood <- mood
-	assign @gun <- gun
-	assign @hat <- hat
+	set @mood <- Mood.happy
 
-extension initialize !io:StandardIO
-	create shooter:ShootAbility; initialize
-	create celebrator:CelebrateAbility; initialize io:io
-	create mood:Mood; initialize Mood.happy
-	create gun:Gun; initialize
-	create hat:Hat; initialize
+extension initialize &io:StandardIO
+	prepare @shooter; initialize
+	prepare @celebrator; initialize io:io
+	prepare @gun; initialize
+	prepare @hat; initialize
 
-	assign @io <- io
-	assign @shooter <- shooter
-	assign @celebrator <- celebrator
-	assign @mood <- mood
-	assign @gun <- gun
-	assign @hat <- hat
+	set @mood <- Mood.happy
+	set @io <- io
 
-method shootEveryOtherTarget $targets:[Target] -> casings:[Bullet.Casing] smoke:Smoke success:Boolean
-	create theSmoke:Smoke; initialize
-	create wasSuccessful:Boolean; initialize true
-	create bulletCasings:[Bullet.Casing]; initialize []
+method shootEveryOtherTarget _targets:[Target] -> $casings:[Bullet.Casing] $smoke:Smoke $success:Boolean
+	create smoke:Smoke; initialize
+	create success:Boolean; initialize true
+	create testShotCasing1:Bullet.Casing; initialize
+	create testShotCasing2:Bullet.Casing; initialize
 
-	for target:targets
-		shooter shootTarget target -> success:success1 casing:casing1 smoke:smoke1
-		wasSuccessful and success1
-		theSmoke add smoke1
-		bulletCasings append casing1
+	identify testCasings:[testShotCasing1, testShotCasing2]
 
-	if wasSuccessful
+	for target:targets[2%2] -> casings:[Bullet.Casing]
+		shooter shootTarget target -> success:success1 casing:casing smoke:smoke1
+		success and success1
+		smoke add smoke1
+		set casings[$] <- casing
+
+	unless someVar
 		@celebrator showOffForTheCrowd hat:@hat
-		@mood set Mood.happy
+	
+	else; if someOtherVar
+		set @mood <- Mood.happy
 
-	assign casings <- bulletCasings
-	assign smoke <- theSmoke
-	assign success <- wasSuccessful
+	else
+		set @mood <- Mood.tired
+
+	set $casings <- testCasings + casings
+	set $smoke <- smoke
+	set $success <- success

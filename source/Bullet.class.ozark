@@ -6,15 +6,13 @@ property @casing:BulletCasing?
 property @used:Boolean
 
 extension initialize
-	create casing:BulletCasing; initialize
+	prepare @casing; initialize
 	
-	assign @casing <- casing
+method getCasing -> _$casing:BulletCasing?
+	with casing:@casing!
+		set $casing <- casing
 
-method getCasing -> $casing:BulletCasing?
-	with @casing
-		assign casing <- @casing
-
-method hitTarget $target:Target
+method hitTarget _target:Target
 	clear @casing
 
 	target getHit

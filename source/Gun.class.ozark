@@ -7,27 +7,21 @@ requirement Smoke
 property @clip:[Bullet]
 
 extension initialize
-	create clip:[Bullet]; initialize
-	create bullet1:Bullet; initialize
-	create bullet2:Bullet; initialize
-	create bullet3:Bullet; initialize
-	create bullet4:Bullet; initialize
+	for i:[1~4] -> clip:[Bullet]
+		create bullet:Bullet; initialize
 
-	clip add bullet1
-	clip add bullet2
-	clip add bullet3
-	clip add bullet4
+		set clip[$] <- bullet
 
-	assign @clip <- clip
+	set @clip <- clip
 
-method shootTarget $target:Target -> casing:Bullet.Casing? smoke:Smoke?
-	@clip pop -> bullet
+method shootTarget _target:Target -> $casing:Bullet.Casing? $smoke:Smoke?
+	if @clip[#]
+		@clip[-1] getCasing -> casing
+		@clip[-1] hitTarget target
 
-	with bullet
-		bullet getCasing -> casing1
-		bullet hitTarget target
+		create smoke:Smoke; initialize
 
-		create smoke1:Smoke; initialize
+		set $smoke <- smoke
+		set $casing <- casing
 
-		assign smoke <- smoke1
-		assign casing <- casing1
+		set @clip <- @clip[1~-2]

@@ -5,8 +5,11 @@ requirement Rifleman
 
 extension initialize
 	create rob:Rifleman; initialize
-	create targets:[Target]; initialize 10
 	create rifle:Gun; initialize
 
+	for i:[1~10] -> targets:[Target]
+		create target:Target initialize
+		set targets[$] <- target
+
 	rob equipGun rifle
-	rob shootEveryOtherTarget targets -> casings:casings1 smoke:smoke1
+	rob shootEveryOtherTarget targets -> casings:casings smoke:smoke
