@@ -15,23 +15,25 @@ class ShootAbility
 	requirement Target
 	requirement Bullet.Casing
 	requirement Smoke
-	requirement Calculus
 
 	enumeration SkillLevel
-		state Novice
-		state Intermediate
-		state Expert
+		state novice
+		state intermediate
+		state expert
 
-	member skill:SkillLevel
+	property @skill:SkillLevel
 
-	extension initialize ~skill:SkillLevel
-		set @skill <- skill
+	extension initialize		
+		set @skill <- SkillLevel.novice
 
-	method fireGun gun:Gun target:Target -> casing:Bullet.Casing smoke:Smoke
-		gun shoot target -> casing:casing1 smoke:smoke1
+	extension initialize &skill:SkillLevel
+		prepare @skill; initialize skill
 
-		set casing <- casing1
-		set smoke <- smoke1
+	method fireGun gun:Gun target:Target -> $casing:Bullet.Casing $smoke:Smoke
+		gun shoot target -> casing:casing smoke:smoke
+
+		set $casing <- casing
+		set $smoke <- smoke
 
 class CelebrateAbility
 	inheritance Ability
@@ -44,76 +46,73 @@ class CelebrateAbility
 
 		requirement Hat
 
-		method tipHat $hat:Hat
+		method tipHat _hat:Hat
 			hat getTipped
 
-	member io:StandardIO
-	member hatTipper:HatTipAbility
+	property @io:StandardIO
+	property @hatTipper:HatTipAbility
 
 	extension initialize
-		@io initialize
-		@hatTipper initialize
+		prepare @io; initialize 
+		prepare @hatTipper; initialize
 
-	extension initialize ~io:StandardIO
+	extension initialize &io:StandardIO
 		set @io <- io
-		@hatTipper initialize
+
+		prepare @hatTipper; initialize
 
 	method showOffForTheCrowd hat:Hat
 		@hatTipper tipHat hat
 		@io print "Hello, ladies."
 
-member io:StandardIO
-member shooter:ShootAbility
-member celebrator:CelebrateAbility
-member gun:Gun
-member hat:Hat
-
-property mood:Mood
-property fieldGuides:Dictionary\String|String
+property @io:StandardIO
+property @shooter:ShootAbility
+property @celebrator:CelebrateAbility
+property @gun:Gun
+property @hat:Hat
+property @mood:Mood
 
 extension initialize
-	create io:StandardIO initialize
-	create shooter:ShootAbility initialize
-	create celebrator:CelebrateAbility initialize io:io
-	create gun:Gun initialize
-	create hat:Hat initialize
+	prepare @io; initialize
+	prepare @shooter; initialize
+	prepare @celebrator; initialize io:io
+	prepare @gun; initialize
+	prepare @hat; initialize
 
-	set @io <- io
-	set @shooter <- shooter
-	set @celebrator <- celebrator
 	set @mood <- Mood.happy
-	set @gun <- gun
-	set @hat <- hat
 
-extension initialize ~io:StandardIO
-	create shooter:ShootAbility initialize
-	create celebrator:CelebrateAbility initialize io:io
-	create gun:Gun initialize
-	create hat:Hat initialize
+extension initialize &io:StandardIO
+	prepare @shooter; initialize
+	prepare @celebrator; initialize io:io
+	prepare @gun; initialize
+	prepare @hat; initialize
 
-	set @io <- io
-	set @shooter <- shooter
-	set @celebrator <- celebrator
 	set @mood <- Mood.happy
-	set @gun <- gun
-	set @hat <- hat
+	set @io <- io
 
-method shootEveryOtherTarget #targets:Array|Target -> casings:Array|Bullet.Casing smoke:Smoke success:Boolean
-	create theCasings:Array|Bullet.Casing initialize
-	create theSmoke:Smoke initialize
+method shootEveryOtherTarget _targets:[Target] -> $casings:[Bullet.Casing] $smoke:Smoke $success:Boolean
+	create smoke:Smoke; initialize
+	create success:Boolean; initialize true
+	create testShotCasing1:Bullet.Casing; initialize
+	create testShotCasing2:Bullet.Casing; initialize
 
-	input oddItems -> oddItems
-	oddItems getKeys -> keys
+	identify testCasings:[testShotCasing1, testShotCasing2]
 
-	for k:keys -> successes:[Boolean]
-		oddItems lookup k -> i
-		shooter shootTarget i -> result
-		successes <- result
+	for target:targets[2%2] -> casings:[Bullet.Casing]
+		shooter shootTarget target -> success:success1 casing:casing smoke:smoke1
+		success and success1
+		smoke add smoke1
+		set casings[$] <- casing
 
-	if all(successes)
+	unless someVar
 		@celebrator showOffForTheCrowd hat:@hat
+	
+	else; if someOtherVar
 		set @mood <- Mood.happy
 
-	set casings <- theCasings
-	set smoke <- theSmoke
-	set success <- all(successes)
+	else
+		set @mood <- Mood.tired
+
+	set $casings <- testCasings + casings
+	set $smoke <- smoke
+	set $success <- success
