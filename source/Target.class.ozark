@@ -1,9 +1,12 @@
 inheritance Object
 
-property upright:Boolean
+property @upright:Boolean
 
 extension initialize
 	set @upright <- true
+
+extension initialize &upright:Boolean
+	set @upright <- upright
 
 method getHit
 	set @upright <- false

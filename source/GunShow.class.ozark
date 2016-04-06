@@ -1,9 +1,12 @@
 inheritance Application
 
 extension initialize
-	create rob:Rifleman initialize
-	create targets:Array|Target initialize
-	create rifle:Gun initialize
+	create rob:Rifleman; initialize
+	create rifle:Gun; initialize
+
+	for i:[1~10] -> targets:[Target]
+		create target:Target initialize
+		set targets[$] <- target
 
 	rob equipGun rifle
-	rob shootEveryOtherTarget targets -> casings:casings1 smoke:smoke1
+	rob shootEveryOtherTarget targets -> casings:casings smoke:smoke
