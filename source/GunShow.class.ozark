@@ -1,8 +1,5 @@
 inheritance Application
 
-requirement Gunman
-requirement Rifleman
-
 extension initialize
 	create rob:Rifleman initialize
 	create targets:Array|Target initialize

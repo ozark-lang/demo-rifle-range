@@ -1,2 +1,2 @@
-./ozark /apps/gunshow -class GunShow -method initialize -out gunshow.app
-./gunshow
+ozark ./source/gunshow -class GunShow -method initialize -out ./products/gunshow.jar
+java gunshow.jar

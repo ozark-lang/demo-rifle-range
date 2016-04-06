@@ -1,21 +1,7 @@
 inheritance Soldier
 
-requirement StandardIO
-requirement Gun
-requirement Bullet.Casing
-requirement Smoke
-requirement Target
-requirement Mood
-requirement Hat
-
 class ShootAbility
 	inheritance Ability
-
-	requirement Gun
-	requirement Target
-	requirement Bullet.Casing
-	requirement Smoke
-	requirement Calculus
 
 	enumeration SkillLevel
 		state Novice
@@ -36,13 +22,8 @@ class ShootAbility
 class CelebrateAbility
 	inheritance Ability
 
-	requirement StandardIO
-	requirement Hat
-
 	class HatTipAbility
 		inheritance Ability
-
-		requirement Hat
 
 		method tipHat #hat:Hat
 			hat getTipped

@@ -1,7 +1,5 @@
 inheritance Object
 
-requirement Target
-
 member casing:BulletCasing?
 
 property used:Boolean

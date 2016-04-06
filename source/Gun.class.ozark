@@ -1,9 +1,5 @@
 inheritance Object
 
-requirement Bullet
-requirement Target
-requirement Smoke
-
 member clip:Array|Bullet
 
 extension initialize
