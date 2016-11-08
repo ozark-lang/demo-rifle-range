@@ -1,5 +1,5 @@
-extension initialize
-	create HatTipAbility; use; initialize
+extension setup
+	create HatTipAbility; use; setup
 
 method showOffForTheCrowd hat:Hat
 	@ tip hat:hat

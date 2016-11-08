@@ -1,7 +1,7 @@
 property @clip:[Bullet]
 
-extension initialize
-	create [Bullet]; set @clip; initialize | repeat 4 times
+extension setup
+	create [Bullet]; set @clip; setup | repeat 4 times
 
 method shoot target:Target -> casing:BulletCasing?, smoke:Smoke?
 	with @clip
@@ -9,4 +9,4 @@ method shoot target:Target -> casing:BulletCasing?, smoke:Smoke?
 		bullet -> casing; set casing
 		bullet hit target:target
 
-		create Smoke; set smoke; initialize
+		create Smoke; set smoke; setup

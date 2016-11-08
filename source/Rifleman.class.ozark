@@ -16,8 +16,8 @@ extension setup
 	create CelebrateAbility; use; setup mood:Mood.happy
 
 method shootEveryOther targets:[Target] -> casings:[Bullet.Casing], smoke:Smoke, success:Boolean
-	create Smoke; set smoke; initialize
-	create Boolean; set success; initialize true
+	create Smoke; set smoke; setup
+	create Boolean; set success; setup true
 
 	@ shoot every target:targets[2%2] -> success:successValue, casing; set casings, smoke:someSmoke
 

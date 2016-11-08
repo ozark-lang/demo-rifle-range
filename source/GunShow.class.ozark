@@ -1,10 +1,10 @@
 inheritance Application
 
 extension begin
-	create rob:Rifleman; initialize
-	create rifle:Gun; initialize
+	create rob:Rifleman; setup
+	create rifle:Gun; setup
 
-	create targets:[Target]; initialize | repeat 10 times
+	create targets:[Target]; setup | repeat 10 times
 
 	rob equip gun:rifle
 	rob shootAlternating targets:targets -> casings, smoke
