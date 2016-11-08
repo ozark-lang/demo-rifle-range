@@ -1,23 +1,12 @@
-inheritance Object
-
 property @clip:[Bullet]
 
 extension initialize
-	for i:[1~4] -> clip:[Bullet]
-		create bullet:Bullet; initialize
+	create [Bullet]; set @clip; initialize | repeat 4 times
 
-		set clip[$] <- bullet
+method shoot target:Target -> casing:BulletCasing?, smoke:Smoke?
+	with @clip
+		split @clip[-1] -> bullet
+		bullet -> casing; set casing
+		bullet hit target:target
 
-	set @clip <- clip
-
-method shootTarget _target:Target -> $casing:Bullet.Casing? $smoke:Smoke?
-	if @clip[#]
-		@clip[-1] getCasing -> casing
-		@clip[-1] hitTarget target
-
-		create smoke:Smoke; initialize
-
-		set $smoke <- smoke
-		set $casing <- casing
-
-		set @clip <- @clip[1~-2]
+		create Smoke; set smoke; initialize

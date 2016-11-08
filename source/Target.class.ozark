@@ -1,5 +1,3 @@
-inheritance Object
-
 property @upright:Boolean
 
 extension initialize

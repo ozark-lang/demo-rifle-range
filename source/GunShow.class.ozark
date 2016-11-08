@@ -1,12 +1,10 @@
 inheritance Application
 
-extension initialize
+extension begin
 	create rob:Rifleman; initialize
 	create rifle:Gun; initialize
 
-	for i:[1~10] -> targets:[Target]
-		create target:Target initialize
-		set targets[$] <- target
+	create targets:[Target]; initialize | repeat 10 times
 
-	rob equipGun rifle
-	rob shootEveryOtherTarget targets -> casings:casings smoke:smoke
+	rob equip gun:rifle
+	rob shootAlternating targets:targets -> casings, smoke

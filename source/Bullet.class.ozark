@@ -1,18 +1,15 @@
-inheritance Object
-
 property @casing:BulletCasing?
 property @used:Boolean
 
-extension initialize
-	create casing:BulletCasing; initialize
+method setup
+	create BulletCasing; set @casing; initialize
+	set @used <- true
 	
-	set @casing <- casing
-	
-method getCasing -> _$casing:BulletCasing?
-	with casing:@casing
-		set $casing <- casing
+method casing -> casing:BulletCasing?
+	set casing <- @casing
 
-method hitTarget _target:Target
+method hit target:Target
 	clear @casing
+	set @used <- true
 
 	target getHit

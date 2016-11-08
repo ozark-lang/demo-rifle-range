@@ -1,114 +1,32 @@
+class
+
 inheritance Soldier
 
-class ShootAbility
-	inheritance Ability
-
-	enumeration SkillLevel
-		state novice
-		state intermediate
-		state expert
-
-	property @skill:SkillLevel
-
-	extension initialize		
-		set @skill <- SkillLevel.novice
-
-	extension initialize &skill:SkillLevel
-		set @skill <- skill
-
-	method fireGun gun:Gun target:Target -> $casing:Bullet.Casing $smoke:Smoke
-		gun shoot target -> casing:casing smoke:smoke
-
-		set $casing <- casing
-		set $smoke <- smoke
-
-class CelebrateAbility
-	inheritance Ability
-
-	class HatTipAbility
-		inheritance Ability
-
-		method tipHat _hat:Hat
-
-			hat getTipped
-
-	property @io:StandardIO
-	property @hatTipper:HatTipAbility
-
-	extension initialize
-		create io:StandardIO; initialize
-		create hatTipper:HatTipAbility; initialize
-
-		set @io <- io
-		set @hatTipper <- hatTipper
-
-	extension initialize &io:StandardIO
-		create hatTipper:HatTipAbility; initialize
-
-		set @io <- io
-		set @hatTipper <- hatTipper
-
-	method showOffForTheCrowd hat:Hat
-		@hatTipper tipHat hat
-		@io print "Hello, ladies."
-
-property @io:StandardIO
-property @shooter:ShootAbility
-property @celebrator:CelebrateAbility
 property @gun:Gun
 property @hat:Hat
 property @mood:Mood
 
-extension initialize
-	create io:StandardIO; initialize
-	create shooter:ShootAbility; initialize
-	create celebrator:CelebrateAbility; initialize io:io
-	create gun:Gun; initialize
-	create hat:Hat; initialize
+extension setup
+	create gun:Gun; set @gun; setup
+	create hat:Hat; set @gun; setup
 
-	set @io <- io
-	set @shooter <- shooter
-	set @celebrator <- celebrator
-	set @gun <- gun
-	set @hat <- hat
 	set @mood <- Mood.happy
 
-extension initialize &io:StandardIO
-	create shooter:ShootAbility; initialize
-	create celebrator:CelebrateAbility; initialize io:io
-	create gun:Gun; initialize
-	create hat:Hat; initialize
+	create Shoot; use; setup
+	create CelebrateAbility; use; setup mood:Mood.happy
 
-	set @shooter <- shooter
-	set @celebrator <- celebrator
-	set @gun <- gun
-	set @hat <- hat
-	set @mood <- Mood.happy
-	set @io <- io
+method shootEveryOther targets:[Target] -> casings:[Bullet.Casing], smoke:Smoke, success:Boolean
+	create Smoke; set smoke; initialize
+	create Boolean; set success; initialize true
 
-method shootEveryOtherTarget _targets:[Target] -> $casings:[Bullet.Casing] $smoke:Smoke $success:Boolean
-	create smoke:Smoke; initialize
-	create success:Boolean; initialize true
-	create testShotCasing1:Bullet.Casing; initialize
-	create testShotCasing2:Bullet.Casing; initialize
+	@ shoot every target:targets[2%2] -> success:successValue, casing; set casings, smoke:someSmoke
 
-	identify testCasings:[testShotCasing1, testShotCasing2]
+	success andFilter every boolean:successes
+	smoke add every smoke:someSmoke
 
-	for target:targets[2%2] -> casings:[Bullet.Casing]
-		@shooter shootTarget target -> success:success1 casing:casing smoke:smoke1
-		success and success1
-		smoke add smoke1
-		set casings[$] <- casing
+	if success is ...
+	... true
+		@ showOffForTheCrowd hat:@hat, mood:@mood
 
-	unless someVar
-		@celebrator showOffForTheCrowd hat:@hat
-	
-	else; if someOtherVar
-		set @mood <- Mood.happy
-
-	else
-		set @mood <- Mood.tired
-
-	set $casings <- testCasings + casings
-	set $smoke <- smoke
-	set $success <- success
+	... false
+		set @mood <- Mood.sad

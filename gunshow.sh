@@ -1,1 +1,1 @@
-ozark GunShow.class.ozark initialize
+ozark GunShow.class.ozark begin

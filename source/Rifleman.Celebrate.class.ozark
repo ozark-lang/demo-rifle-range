@@ -1,0 +1,6 @@
+extension initialize
+	create HatTipAbility; use; initialize
+
+method showOffForTheCrowd hat:Hat
+	@ tip hat:hat
+	print "Hello, ladies."
