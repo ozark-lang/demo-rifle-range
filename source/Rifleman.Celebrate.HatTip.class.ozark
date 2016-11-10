@@ -1,2 +1,2 @@
 method tip hat:Hat
-	print "::raise Hat::"
+	print "::Raise hat::"

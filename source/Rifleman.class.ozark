@@ -19,10 +19,10 @@ method shootEveryOther targets:[Target] -> casings:[Bullet.Casing], smoke:Smoke,
 	create Smoke; set smoke; setup
 	create Boolean; set success; setup true
 
-	@ shoot every target:targets[2%2] -> success:successValue, casing; set casings, smoke:someSmoke
+	@ shoot each target:targets[2%2] -> success:successValue, casing; set casings, smoke:someSmoke
 
-	success andFilter every boolean:successes
-	smoke add every smoke:someSmoke
+	success andFilter each boolean:successes
+	smoke add each smoke:someSmoke
 
 	if success is ...
 	... true
