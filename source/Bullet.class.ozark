@@ -2,7 +2,7 @@ property @casing:BulletCasing?
 property @used:Boolean
 
 method setup
-	create BulletCasing; set @casing; setup
+	make @casing:BulletCasing; setup
 	set @used <- true
 	
 method casing -> casing:BulletCasing?

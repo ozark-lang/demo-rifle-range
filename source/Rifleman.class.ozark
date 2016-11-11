@@ -7,17 +7,17 @@ property @hat:Hat
 property @mood:Mood
 
 extension setup
-	create gun:Gun; set @gun; setup
-	create hat:Hat; set @gun; setup
+	make @gun:Gun; setup
+	make @hat:Hat; setup
 
 	set @mood <- Mood.happy
 
-	create Shoot; use; setup
-	create CelebrateAbility; use; setup mood:Mood.happy
+	make @:Shoot; setup
+	make @:CelebrateAbility; setup mood:Mood.happy
 
 method shootEveryOther targets:[Target] -> casings:[Bullet.Casing], smoke:Smoke, success:Boolean
-	create Smoke; set smoke; setup
-	create Boolean; set success; setup true
+	make smoke:Smoke; setup
+	make success:Boolean; setup true
 
 	@ shoot each target:targets[2%2] -> success:successValue, casing; set casings, smoke:someSmoke
 
