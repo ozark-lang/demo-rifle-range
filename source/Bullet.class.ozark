@@ -1,15 +1,15 @@
-property @casing:BulletCasing?
-property @used:Boolean
+property @casing: BulletCasing?
+property @used: Boolean
 
 method setup
-	make @casing:BulletCasing; setup
+	create BulletCasing; set @casing; setup
 	set @used <- true
 	
-method casing -> casing:BulletCasing?
+method casing -> casing: BulletCasing?
 	set casing <- @casing
 
-method hit target:Target
-	clear @casing
+method hit target: Target
+	set @casing <- nil
 	set @used <- true
 
 	target getHit

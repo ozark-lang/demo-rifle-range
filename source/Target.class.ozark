@@ -1,9 +1,9 @@
-property @upright:Boolean
+property @upright: Boolean
 
 extension setup
 	set @upright <- true
 
-extension setup &upright:Boolean
+extension setup &upright: Boolean
 	set @upright <- upright
 
 method getHit

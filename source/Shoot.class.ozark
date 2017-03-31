@@ -1,0 +1,12 @@
+inheritance Ability
+
+property @skill: SkillLevel
+
+extension setup
+	set @skill <- SkillLevel.novice
+
+extension setup &skill: SkillLevel
+	set @skill <- skill
+
+method fireGun gun: Gun target: Target -> casing: Bullet.Casing, smoke: Smoke
+	gun shoot target -> casing; set casing, smoke; set smoke

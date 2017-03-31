@@ -1,32 +1,31 @@
-class
-
 inheritance Soldier
 
-property @gun:Gun
-property @hat:Hat
-property @mood:Mood
+property @gun: Gun
+property @hat: Hat
+property @mood: Mood
+property @shoot: Shoot
+property @celebrate: Celebrate
 
 extension setup
-	make @gun:Gun; setup
-	make @hat:Hat; setup
-
 	set @mood <- Mood.happy
 
-	make @:Shoot; setup
-	make @:CelebrateAbility; setup mood:Mood.happy
+	create Gun; set @gun; setup
+	create Hat; set @hat; setup
+	create Shoot; set @shoot; setup
+	create Celebrate; set @celebrate; setup mood: @mood
 
-method shootEveryOther targets:[Target] -> casings:[Bullet.Casing], smoke:Smoke, success:Boolean
-	make smoke:Smoke; setup
-	make success:Boolean; setup true
+method shootEveryOther targets: [Target] -> casings: [Bullet.Casing], smoke: Smoke, success: Boolean
+	create Smoke; set smoke; setup
+	create Boolean; set success; setup true
 
-	@ shoot each target:targets[2%2] -> success:successValue, casing; set casings, smoke:someSmoke
+	@shoot ! each target: targets[2%2] -> success: successes, casing; set casings, smoke: smokePuffs
 
-	success andFilter each boolean:successes
-	smoke add each smoke:someSmoke
+	success andFilter each boolean: successes
+	smoke add each smoke: smokePuffs
 
 	if success is ...
 	... true
-		@ showOffForTheCrowd hat:@hat, mood:@mood
+		@celebrate showOffForTheCrowd hat: @hat, mood: @mood
 
 	... false
 		set @mood <- Mood.sad

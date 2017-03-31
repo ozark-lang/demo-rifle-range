@@ -1,6 +1,0 @@
-extension setup
-	make @:HatTipAbility; setup
-
-method showOffForTheCrowd hat:Hat
-	@ tip hat:hat
-	print "Hello, ladies."

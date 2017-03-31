@@ -1,2 +1,2 @@
-method tip hat:Hat
+method ! hat: Hat
 	print "::Raise hat::"
