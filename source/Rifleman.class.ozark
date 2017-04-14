@@ -18,7 +18,7 @@ method shootEveryOther targets: [Target] -> casings: [Bullet.Casing], smoke: Smo
 	create Smoke; set smoke; setup
 	create Boolean; set success; setup true
 
-	@shoot ! each target: targets[2%2] -> success: successes, casing; set casings, smoke: smokePuffs
+	@shoot! each target: targets[2%2] -> success: successes, casing; set casings, smoke: smokePuffs
 
 	success andFilter each boolean: successes
 	smoke add each smoke: smokePuffs

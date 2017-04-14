@@ -4,5 +4,5 @@ extension setup
 	create TipHat; set @tip; setup
 
 method showOffForTheCrowd hat: Hat
-	@tip ! hat: hat
+	@tip! hat: hat
 	print "Hello, ladies."
