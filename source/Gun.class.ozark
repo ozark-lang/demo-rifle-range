@@ -1,12 +1,12 @@
 property @clip: [Bullet]
 
 extension setup
-	create [Bullet]; set @clip; setup | repeat 4 times
+	create [Bullet]; assign to @clip; setup | repeat 4 times
 
-method shoot target: Target -> casing: BulletCasing?, smoke: Smoke?
+method shoot target: implied Target yields casing: BulletCasing?, smoke: Smoke?
 	with @clip
-		split @clip[-1] -> bullet
-		bullet -> casing; set casing
-		bullet hit target: target
+		pop @clip[-1] -> bullet, assign to @clip
+		bullet casing -> assign to casing
+		bullet hit target
 
-		create Smoke; set smoke; setup
+		create a Smoke; assign to smoke; setup

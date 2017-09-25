@@ -1,31 +1,27 @@
-inheritance Soldier
+dependency Military from "../Military"
+
+inheritance Military~Soldier
 
 property @gun: Gun
-property @hat: Hat
 property @mood: Mood
 property @shoot: Shoot
 property @celebrate: Celebrate
 
 extension setup
-	set @mood <- Mood.happy
+	assign .calm to @mood
 
-	create Gun; set @gun; setup
-	create Hat; set @hat; setup
-	create Shoot; set @shoot; setup
-	create Celebrate; set @celebrate; setup mood: @mood
+	create Gun; assign to @gun; setup
+	create Shoot; assign to @shoot; setup
+	create Celebrate; assign to @celebrate; setup with mood: @mood
 
-method shootEveryOther targets: [Target] -> casings: [Bullet.Casing], smoke: Smoke, success: Boolean
-	create Smoke; set smoke; setup
-	create Boolean; set success; setup true
+method equip gun: implied Gun
+	assign gun to @gun
 
-	@shoot! each target: targets[2%2] -> success: successes, casing; set casings, smoke: smokePuffs
+method shootAlternating targets: implied [Target] yields
+		casings: [Bullet.Casing], success: Boolean
 
-	success andFilter each boolean: successes
-	smoke add each smoke: smokePuffs
+	@shoot! all targets[2%2] with gun: @gun -> casing: assign to casings
+	@celebrate!
 
-	if success is ...
-	... true
-		@celebrate showOffForTheCrowd hat: @hat, mood: @mood
-
-	... false
-		set @mood <- Mood.sad
+	assign .happy to @mood
+	assign true to success

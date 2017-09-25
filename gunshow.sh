@@ -1,1 +1,1 @@
-ozark GunShow.class.ozark begin
+ozark create GunShow.class.ozark --method begin

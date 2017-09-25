@@ -1,4 +1,3 @@
-state happy
-state sad
-state angry
-state calm
+state .happy
+state .sad
+state .calm

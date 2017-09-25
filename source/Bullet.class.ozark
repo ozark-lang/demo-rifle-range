@@ -2,14 +2,14 @@ property @casing: BulletCasing?
 property @used: Boolean
 
 method setup
-	create BulletCasing; set @casing; setup
-	set @used <- true
+	create BulletCasing; assign to @casing; setup
+	assign true to @used
 	
-method casing -> casing: BulletCasing?
-	set casing <- @casing
+method casing yields casing: implied BulletCasing?
+	assign @casing to casing
 
 method hit target: Target
-	set @casing <- nil
-	set @used <- true
+	clear @casing
+	assign true to @used
 
 	target getHit

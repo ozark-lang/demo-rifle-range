@@ -1,8 +1,8 @@
-property @tip: TipHat
+property @tipHat: TipHat
 
 extension setup
-	create TipHat; set @tip; setup
+	create TipHat; assign to @tipHat; setup
 
-method showOffForTheCrowd hat: Hat
-	@tip! hat: hat
-	print "Hello, ladies."
+method !
+	@tipHat!
+	print "Thank you, thank you!"

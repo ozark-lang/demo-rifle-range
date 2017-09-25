@@ -1,2 +1,0 @@
-method ! hat: Hat
-	print "::Raise hat::"

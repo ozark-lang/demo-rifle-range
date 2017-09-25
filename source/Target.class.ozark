@@ -1,10 +1,10 @@
 property @upright: Boolean
 
 extension setup
-	set @upright <- true
+	assign true to @upright
 
-extension setup &upright: Boolean
-	set @upright <- upright
+extension setup & upright: Boolean
+	assign upright to @upright
 
 method getHit
-	set @upright <- false
+	assign false to @upright
